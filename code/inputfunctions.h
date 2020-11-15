@@ -1,15 +1,15 @@
 using namespace std;
 
-float readf(string location){
-    ifstream cputemp;
-    cputemp.open(location, ios::in);
+float readf(string location, unsigned int divideby=1){
+    ifstream file;
+    file.open(location, ios::in);
     string str;	
 
-    for(int lineno=1; getline(cputemp, str)&& lineno < 3; lineno++){
+    for(int lineno=1; getline(file, str)&& lineno <= 1; lineno++){
 	if(lineno==1){
 	    break;
 	}
     }	
-    cputemp.close();
-    return stoi(str)/1000;
+    file.close();
+    return stoi(str)/divideby;
 }
