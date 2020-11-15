@@ -5,6 +5,7 @@
 #include <fstream>
 #include <unistd.h>
 #include <math.h>
+#include <string.h>
 
 #include "drawfunctions.h"
 #include "inputfunctions.h"
@@ -40,14 +41,19 @@ int main()
 
 	    gputemp = readf("/sys/class/hwmon/hwmon1/temp2_input");
             gpusmth = (gputemp*.05+gpusmth*.95);
+            
 
-            delln(maxy-2, 1, maxy*8,2);
-            addln(maxy-2, 1, cpusmth/90*maxy*8,2);
-            mvprintw(maxy-1, 1, "^^cpu");
+            for(short int labelheight=0; labelheight<=90;labelheight+=10){
+                mvprintw(maxy-(labelheight*maxy/90)-2, 1, "%d-", labelheight);
+            }
 
-            delln(maxy-2, 7, maxy*8,2);
-            addln(maxy-2, 7, (gpusmth/90)*maxy*8,2);
-            mvprintw(maxy-1, 7, "^^gpu");
+            delln(maxy-2, 4, maxy*8,2);
+            addln(maxy-2, 4, cpusmth/90*maxy*8,2);
+            mvprintw(maxy-1, 4, "^^cpu");
+
+            delln(maxy-2, 9, maxy*8,2);
+            addln(maxy-2, 9, (gpusmth/90)*maxy*8,2);
+            mvprintw(maxy-1, 9, "^^gpu");
 
             refresh();
             
