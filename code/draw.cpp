@@ -16,17 +16,20 @@ int main()
 {	
     setlocale(LC_CTYPE, ""); // Set locale so we can display UTF-8 chars.
 
-    float cputemp;
+    int cputemp;
     float cputempsmth = 0;
     
-    float gputemp;
+    int gputemp;
     float gputempsmth = 0;
 
-    float cpusage;
+    int cpusage;
     float cpusagesmth = 0;
 
-    float gpusage;
+    int gpusage;
     float gpusagesmth = 0;
+
+    int memfree;
+    float memfreesmth = 0;
 
 
     initscr();		    // Start curses mode
@@ -54,7 +57,8 @@ int main()
 	    gpusage = readf("/sys/class/hwmon/hwmon2/device/gpu_busy_percent");
             gpusagesmth = (gpusage*.05+gpusagesmth*.95);
             
-
+            memfree = readmem();
+            memfreesmth = memfree*.05+memfreesmth*.95;
 
             for(short int labelheight=0; labelheight<=90;labelheight+=10){
                 mvprintw(maxy-(labelheight*(maxy-3)/90)-2, 0, "%dC-", labelheight);
@@ -80,6 +84,14 @@ int main()
             delln(maxy-2, 18, maxy*8,2);
             addln(maxy-2, 18, (gpusagesmth/100)*(maxy-3)*8,2);
             mvprintw(maxy-1, 18, "^^gpu");
+
+            delln(maxy-2, 23, maxy*8,2);
+            addln(maxy-2, 23, (memfreesmth/100)*(maxy-3)*8,2);
+            mvprintw(maxy-1, 23, "^^mem");
+
+
+
+
             refresh();
             
             usleep(25000);
