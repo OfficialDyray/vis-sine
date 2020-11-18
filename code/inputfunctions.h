@@ -32,3 +32,23 @@ short unsigned int readmem(){
     file.close();
     return 100-(usedmem*100/totalmem);
 }
+
+void getcpusage(unsigned int *totalout, unsigned int *idleout){
+    ifstream file;
+    string lineStr;
+
+    unsigned int user, nice, system, idle, iowait, irq, softirq, total;
+    string s;
+
+    file.open("/proc/stat", ios::in);
+	
+    getline(file, lineStr);
+    istringstream lineStrSort(lineStr);
+	
+    lineStrSort >> s >> user >> nice >> system >> idle >> iowait >> irq >> softirq;
+	
+    *totalout = user + nice + system + idle + iowait + irq + softirq;
+    *idleout = idle;
+
+    file.close();
+}
