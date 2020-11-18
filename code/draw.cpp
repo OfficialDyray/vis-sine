@@ -57,10 +57,10 @@ int main()
 	    cputemp = readf("/sys/class/hwmon/hwmon0/temp2_input", 1000);
             cputempsmth = cputemp*.05+cputempsmth*.95;
 
-	    gputemp = readf("/sys/class/hwmon/hwmon2/temp2_input", 1000);
+	    gputemp = readf("/sys/class/hwmon/hwmon1/temp2_input", 1000);
             gputempsmth = gputemp*.05+gputempsmth*.95;
 
-	    gpusage = readf("/sys/class/hwmon/hwmon2/device/gpu_busy_percent");
+	    gpusage = readf("/sys/class/hwmon/hwmon1/device/gpu_busy_percent");
             gpusagesmth = gpusage*.05+gpusagesmth*.95;
             
             memfree = readmem();

@@ -3,6 +3,8 @@ using namespace std;
 float readf(string location, unsigned int divideby=1){
     ifstream file;
     file.open(location, ios::in);
+    if(!file){return 0;}
+
     string str;	
 
     for(int lineno=1; getline(file, str)&& lineno <= 1; lineno++){
@@ -17,6 +19,8 @@ float readf(string location, unsigned int divideby=1){
 short unsigned int readmem(){
     ifstream file;
     file.open("/proc/meminfo", ios::in);
+    if(!file){return 0;}
+
     int totalmem;
     int usedmem;
     string str;	
@@ -41,6 +45,7 @@ void getcpusage(unsigned int *totalout, unsigned int *idleout){
     string s;
 
     file.open("/proc/stat", ios::in);
+    if(!file){return;}
 	
     getline(file, lineStr);
     istringstream lineStrSort(lineStr);
